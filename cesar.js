@@ -1,4 +1,4 @@
-// SEGURANÇA DA INFORMAÇAO 2024 | Cifra de césar
+// SEGURANÇA DA INFORMAÇAO 2024 | Cifra de césar CORRIGIDO
 // Evelin Geovana Steiger
 
 const key = 13;
@@ -12,22 +12,22 @@ const encodeText = (key, input) => {
 
   while (i < input.length) {
     const index = letters.search(input[i].toUpperCase());
+
     let position = index + key;
 
     if (index !== -1) {
       if (index === arraySize - 1) {
         response = response + letters[k];
       } else if (position > arraySize - 1) {
-        while (position > arraySize) {
+        while (position > arraySize - 1) {
           position = arraySize - position - 1;
         }
 
-        position = position * -1;
-
-        response = response + letters[position - 1];
+        position = Math.abs(position + 1);
+        response = response + letters[position];
       } else {
-        position = arraySize - position - 1;
-        response = response + letters[position - 1];
+        position = Math.abs(position);
+        response = response + letters[position];
       }
     } else {
       response = response + input[i];
@@ -51,14 +51,14 @@ const decodeText = (key, input) => {
 
     if (index !== -1) {
       if (index === 0) {
-        position = arraySize - key;
-        response = response + letters[position - 1];
+        position = Math.abs(arraySize - key);
       } else if (position < 0) {
-        position = position * -1;
-        response = response + letters[position + 2];
+        position = Math.abs(arraySize + position);
       } else {
-        response = response + letters[position - 1];
+        position = Math.abs(position);
       }
+
+      response = response + letters[position];
     } else {
       response = response + input[i];
     }
